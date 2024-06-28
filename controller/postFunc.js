@@ -1,5 +1,5 @@
 const postCollection = require('../model/Post')
-const ObjectId = require("mongoose").Types.ObjectId;
+
 
 
 async function createPost(req, res) {
@@ -63,7 +63,6 @@ async function getPostByTags(req, res) {
     tags = JSON.parse(tags) 
     }
 
-
     try {
 
         const response = await postCollection.find({hashtag:{$in:tags}}).skip(per_page * page_size).limit(per_page)
@@ -75,5 +74,6 @@ async function getPostByTags(req, res) {
     }
 
 }
+
 
 module.exports = { createPost, updatePost, deletePost, getPostByText, getPostByTags }

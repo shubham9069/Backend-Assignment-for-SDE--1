@@ -1,5 +1,5 @@
 const express = require('express');
-const { createPost, updatePost, deletePost, getPostByTags, getPostByText } = require('../controller/postFunc');
+const { createPost, updatePost, deletePost, getPostByTags,getPostByText } = require('../controller/postFunc');
 const cookieParser = require('cookie-parser');
 const middleware = require('../middleware');
 const router = express.Router();
@@ -11,11 +11,6 @@ router.get('/delete-post', middleware, deletePost )
 
 router.get('/get-post-tags', middleware, getPostByTags )
 router.get('/get-post-text', middleware, getPostByText )
-
-
-
-
-
 
 
 
