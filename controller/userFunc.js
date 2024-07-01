@@ -75,18 +75,18 @@ async function loginUser(req, res) {
     try {
         // check user present in  db or not 
         const checkUser = await userCollection.findOne({ mobile_no: mobile })
-        if (!checkUser) {
-            throw new Error("user not exist please signup")
+        if (checkUser) {
+            const accessToken = jwt.sign(
+                { "user_id": checkUser._id },
+                process.env.ACCESS_TOKEN_SECRET,
+                { expiresIn: '30d' }
+            )
+
+            res.cookie("user_id", checkUser._id, { maxAge: 1000 * 24 * 60 * 60 * 365 });
+            return res.json({ status: 'success', data: checkUser, access_token: accessToken })
         }
 
-        const accessToken = jwt.sign(
-            { "user_id": checkUser._id },
-            process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: '30d' }
-        )
-
-        res.cookie("user_id", checkUser._id, { maxAge: 1000 * 24 * 60 * 60 * 365 });
-        return res.json({ status: 'success', data: checkUser, access_token: accessToken })
+     
 
 
     } catch (err) {
